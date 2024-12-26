@@ -1,0 +1,8 @@
+D:
+cd \01UPENN\COURSES\03CPLN5500_Geospatial_DataScience_In_Python\assignment_final\riya_varun_finalassgn\
+mamba activate musa-550-fall-2023
+quarto preview about.qmd --to html --no-watch-inputs --no-browse
+
+optional: quarto preview testriya.qmd --to html --no-watch-inputs --no-browse --python "C:\Users\USER\miniforge3\envs\musa-550-fall-2023\python.exe"
+
+https://chatgpt.com/share/676b26dd-12c0-800a-a24f-4d6fe3dc45ed

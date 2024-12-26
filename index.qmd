@@ -1,0 +1,21 @@
+---
+title: "MUSA 550: Final Project- Riya & Varun"
+subtitle: "Bus Lane and Transit Signal Prioritization in Philadelphia"
+jupyter: python3
+---
+
+## Research Question
+
+The project, in alignment with SEPTA’s Bus Revolution network redesign, aims to identify key streets and intersections in Philadelphia that serve the most buses and bus passengers as well as identify areas with the most vulnerable populations in terms of mobility to propose locations for impactful transit solutions such as bus lanes and transit signal prioritization. By leveraging multiple datasets, the project seeks to improve bus service efficiency and equity in public transit. 
+
+We specifically look at how a data-driven approach, leveraging ridership patterns, bus operational performance, and demographic indicators, can be utilized to recommend strategic interventions that not only improve transit service reliability but also address mobility challenges for underserved communities.
+
+[![SEPTA Bus Revolution Graphic](images/Bus-Revolution.webp){fig-align="left" width="500"}](https://www.vtransitcenter.com/2024/05/24/septa-bus-revolution-approved/)
+
+To identify opportunities for bus lanes and transit signal prioritization, our analysis focuses on three key objectives:
+
+Transit Mapping: Understanding the Existing Bus Network. We analyze the current bus network to identify routes with the highest frequency and ridership, providing a baseline for prioritizing infrastructure improvements. It ensures that proposed interventions will have the greatest operational impact and benefit the most riders.
+
+Transit Vulnerability: Addressing Social Disparities. We Recognize that focusing solely on infrastructure and ridership data may overlook critical social inequities. Therefore, we developed a Transit Vulnerability Index that highlights populations most in need of transit reforms, incorporating key demographic and accessibility criteria.
+
+Transit Priority: Integrating Social and Network Data. By combining insights from the Transit Vulnerability Index with bus network performance, we identify and prioritize 10 areas or bus routes that demonstrate the greatest need for interventions.

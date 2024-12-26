@@ -1,0 +1,38 @@
+---
+title: "Authors"
+jupyter: python3
+---
+
+This project is the collaborative effort of two Master of City Planning students specializing in Sustainable Transportation and Infrastructure Planning. Driven by a commitment to creating people-centered transit solutions, the authors bring a data-driven and equity-focused approach to addressing pressing urban mobility challenges
+
+::: {style="display: flex; gap: 10px; align-items: flex-start;"}
+![](images/riya.jpg)
+
+<div>
+
+### **Riya Saini**
+
+*(She/ Her)*
+
+*Master of City Planning Student \| Sustainable Transportation & Infrastructure Planning*
+
+Riya Saini is a Master of City Planning student at UPenn with a focus on urban mobility. She is passionate about transportation accessibility and the impact of transit on public health. Riya has experience in transportation modeling, trip generation mode choice modeling, and generating visually stunning graphs analyzing transit and vehicle accessibility across the US.
+
+</div>
+:::
+
+::: {style="display: flex; gap: 10px; align-items: flex-start;"}
+![](images/varun.jpg)
+
+<div>
+
+### **Varun Bhakhri**
+
+*(He/ Him)*
+
+*Master of City Planning Student \| Sustainable Transportation & Infrastructure Planning*
+
+Riya Saini is a Master of City Planning student at UPenn with a focus on urban mobility. She is passionate about transportation accessibility and the impact of transit on public health. Riya has experience in transportation modeling, trip generation mode choice modeling, and generating visually stunning graphs analyzing transit and vehicle accessibility across the US.
+
+</div>
+:::

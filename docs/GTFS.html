@@ -1,0 +1,1956 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Mapping Transit Network – riya_varun_finalassgn</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-b5e3097ca6bab6260ed4ce2e73d47aae.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-2ad2dd9ea6f5b1d0d57f5b9e11e10775.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">riya_varun_finalassgn</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./resources.html"> 
+<span class="menu-text">Resources</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-analysis" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Analysis</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-analysis">    
+        <li>
+    <a class="dropdown-item" href="./GTFS.html">
+ <span class="dropdown-text">Transit Mapping</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./social_vulnerability.html">
+ <span class="dropdown-text">Transit Vulnerability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./buspriority.html">
+ <span class="dropdown-text">Transit Priority</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#load-and-inspect-gtfs-data-for-philadelphia" id="toc-load-and-inspect-gtfs-data-for-philadelphia" class="nav-link active" data-scroll-target="#load-and-inspect-gtfs-data-for-philadelphia">Load and Inspect GTFS data for Philadelphia:</a></li>
+  <li><a href="#create-philadelphias-bus-network" id="toc-create-philadelphias-bus-network" class="nav-link" data-scroll-target="#create-philadelphias-bus-network">Create Philadelphia’s Bus Network:</a>
+  <ul class="collapse">
+  <li><a href="#trim-bus-network-to-philadelphia-city-boundary" id="toc-trim-bus-network-to-philadelphia-city-boundary" class="nav-link" data-scroll-target="#trim-bus-network-to-philadelphia-city-boundary">Trim Bus Network to Philadelphia City Boundary</a></li>
+  <li><a href="#total-daily-buses-arriving-at-each-bus-stop" id="toc-total-daily-buses-arriving-at-each-bus-stop" class="nav-link" data-scroll-target="#total-daily-buses-arriving-at-each-bus-stop">Total daily buses arriving at each bus stop:</a></li>
+  <li><a href="#total-number-and-peak-period" id="toc-total-number-and-peak-period" class="nav-link" data-scroll-target="#total-number-and-peak-period">Total Number and Peak Period</a></li>
+  <li><a href="#find-number-of-buses-per-hour-on-the-entire-system-to-determine-peak-period" id="toc-find-number-of-buses-per-hour-on-the-entire-system-to-determine-peak-period" class="nav-link" data-scroll-target="#find-number-of-buses-per-hour-on-the-entire-system-to-determine-peak-period">Find number of buses per hour on the entire system to determine peak period:</a></li>
+  <li><a href="#find-peak-period" id="toc-find-peak-period" class="nav-link" data-scroll-target="#find-peak-period">Find Peak Period</a></li>
+  <li><a href="#bus-frequency" id="toc-bus-frequency" class="nav-link" data-scroll-target="#bus-frequency">Bus Frequency</a></li>
+  <li><a href="#bus-headways" id="toc-bus-headways" class="nav-link" data-scroll-target="#bus-headways">Bus Headways</a></li>
+  <li><a href="#merge-calculated-bus-metrics-with-the-stops-dataframe-containing-stop-names-and-co-ordinates" id="toc-merge-calculated-bus-metrics-with-the-stops-dataframe-containing-stop-names-and-co-ordinates" class="nav-link" data-scroll-target="#merge-calculated-bus-metrics-with-the-stops-dataframe-containing-stop-names-and-co-ordinates">Merge calculated bus metrics with the stops dataframe containing stop names and co-ordinates:</a></li>
+  <li><a href="#bus-ridership" id="toc-bus-ridership" class="nav-link" data-scroll-target="#bus-ridership">Bus Ridership:</a></li>
+  <li><a href="#convert-bus-data-to-geodataframe" id="toc-convert-bus-data-to-geodataframe" class="nav-link" data-scroll-target="#convert-bus-data-to-geodataframe">Convert Bus Data to GeoDataframe</a></li>
+  </ul></li>
+  <li><a href="#level-of-service-analysis" id="toc-level-of-service-analysis" class="nav-link" data-scroll-target="#level-of-service-analysis">Level of Service Analysis</a></li>
+  <li><a href="#visualise-metrics-by-bus-stop" id="toc-visualise-metrics-by-bus-stop" class="nav-link" data-scroll-target="#visualise-metrics-by-bus-stop">Visualise metrics by bus stop:</a></li>
+  <li><a href="#join-bus-stop-level-metrics-to-philadelphias-bus-network" id="toc-join-bus-stop-level-metrics-to-philadelphias-bus-network" class="nav-link" data-scroll-target="#join-bus-stop-level-metrics-to-philadelphias-bus-network">Join Bus Stop Level Metrics to Philadelphia’s Bus Network:</a>
+  <ul class="collapse">
+  <li><a href="#visualisation-of-metrics-by-street-segments-on-philadelphias-bus-network" id="toc-visualisation-of-metrics-by-street-segments-on-philadelphias-bus-network" class="nav-link" data-scroll-target="#visualisation-of-metrics-by-street-segments-on-philadelphias-bus-network">Visualisation of Metrics by Street Segments on Philadelphia’s Bus Network</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Mapping Transit Network</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div id="768eab02-87e3-4913-b785-42278bdc584f" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Load Packages:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> osmnx <span class="im">as</span> ox</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> shapely</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely.geometry <span class="im">import</span> Point</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> folium</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> folium <span class="im">import</span> Choropleth</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="load-and-inspect-gtfs-data-for-philadelphia" class="level3">
+<h3 class="anchored" data-anchor-id="load-and-inspect-gtfs-data-for-philadelphia">Load and Inspect GTFS data for Philadelphia:</h3>
+<p>We utilized the General Transit Feed Specification (GTFS), a standardized data format that provides public transportation schedules and associated network information, to extract SEPTA bus stop locations and stop times at each stop. We simultaneously, also import the bus network for the region and clip it to Philadelphia Metropolitan Area city limits for our analysis.</p>
+<div id="f3948d9c-5dcd-4cb7-a66d-ccdb97732a7a" class="cell" data-tags="[]" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Load GTFS Data:</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>gtfs_folder <span class="op">=</span> <span class="st">"Data/google_bus_Fall 2023"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Dictionary to store dataframes for each GTFS file</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>gtfs_dataframes <span class="op">=</span> {}</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through all files in the folder</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> file_name <span class="kw">in</span> os.listdir(gtfs_folder):</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Check if the file is a .txt file</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> file_name.endswith(<span class="st">".txt"</span>):</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        file_path <span class="op">=</span> os.path.join(gtfs_folder, file_name)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Read the .txt file into a Pandas DataFrame</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>            dataframe_name <span class="op">=</span> file_name.replace(<span class="st">".txt"</span>, <span class="st">""</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>            gtfs_dataframes[dataframe_name] <span class="op">=</span> pd.read_csv(file_path)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"Imported </span><span class="sc">{</span>file_name<span class="sc">}</span><span class="ss"> as '</span><span class="sc">{</span>dataframe_name<span class="sc">}</span><span class="ss">' with </span><span class="sc">{</span><span class="bu">len</span>(gtfs_dataframes[dataframe_name])<span class="sc">}</span><span class="ss"> rows."</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"Failed to load </span><span class="sc">{</span>file_name<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Loaded DataFrames: </span><span class="sc">{</span><span class="bu">list</span>(gtfs_dataframes.keys())<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Imported agency.txt as 'agency' with 1 rows.
+Imported calendar.txt as 'calendar' with 21 rows.
+Imported calendar_dates.txt as 'calendar_dates' with 140 rows.
+Imported fare_attributes.txt as 'fare_attributes' with 10 rows.
+Imported fare_rules.txt as 'fare_rules' with 15 rows.
+Imported routes.txt as 'routes' with 167 rows.
+Imported shapes.txt as 'shapes' with 536093 rows.
+Imported stops.txt as 'stops' with 13801 rows.
+Imported stop_times.txt as 'stop_times' with 2975534 rows.
+Imported transfers.txt as 'transfers' with 8 rows.
+Imported trips.txt as 'trips' with 49558 rows.
+Loaded DataFrames: ['agency', 'calendar', 'calendar_dates', 'fare_attributes', 'fare_rules', 'routes', 'shapes', 'stops', 'stop_times', 'transfers', 'trips']</code></pre>
+</div>
+</div>
+<div id="b8f9787f-4e19-4b9f-bfc6-4f6fe423d26c" class="cell" data-tags="[]" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract relevant files as dataframes</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>stops_df <span class="op">=</span> gtfs_dataframes.get(<span class="st">"stops"</span>, <span class="va">None</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>stop_times_df <span class="op">=</span> gtfs_dataframes.get(<span class="st">"stop_times"</span>, <span class="va">None</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>routes_df <span class="op">=</span> gtfs_dataframes.get(<span class="st">"routes"</span>, <span class="va">None</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>shapes_df <span class="op">=</span> gtfs_dataframes.get(<span class="st">"shapes"</span>, <span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="4cd7f9c2-0219-4f43-b9a9-53b23d7354c5" class="cell" data-tags="[]" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>stops_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">stop_id</th>
+<th data-quarto-table-cell-role="th">stop_name</th>
+<th data-quarto-table-cell-role="th">stop_lat</th>
+<th data-quarto-table-cell-role="th">stop_lon</th>
+<th data-quarto-table-cell-role="th">location_type</th>
+<th data-quarto-table-cell-role="th">parent_station</th>
+<th data-quarto-table-cell-role="th">zone_id</th>
+<th data-quarto-table-cell-role="th">wheelchair_boarding</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2</td>
+<td>Ridge Av &amp; Wissahickon Transfer Center</td>
+<td>40.014986</td>
+<td>-75.206826</td>
+<td>NaN</td>
+<td>31032.0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>4</td>
+<td>Roosevelt Blvd &amp; Broad St - FS</td>
+<td>40.018128</td>
+<td>-75.148887</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>5</td>
+<td>Roosevelt Blvd &amp; 5th St</td>
+<td>40.023465</td>
+<td>-75.133487</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>7</td>
+<td>Roosevelt Blvd &amp; Pratt St</td>
+<td>40.028754</td>
+<td>-75.089524</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>8</td>
+<td>Roosevelt Blvd &amp; Cottman Av - FS</td>
+<td>40.044610</td>
+<td>-75.053657</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="create-philadelphias-bus-network" class="level2">
+<h2 class="anchored" data-anchor-id="create-philadelphias-bus-network">Create Philadelphia’s Bus Network:</h2>
+<p>Convert all shapes from points to linestrings:</p>
+<div id="34a4bce6-0eaa-4cbc-9262-1e2cdd5bb1ef" class="cell" data-tags="[]" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(shapes_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        shape_id  shape_pt_lat  shape_pt_lon  shape_pt_sequence
+0         286406     39.976568    -75.196097                206
+1         286406     40.006143    -75.196839                417
+2         286406     40.006429    -75.197471                420
+3         286410     39.985246    -75.208209                294
+4         286410     39.986857    -75.207831                307
+...          ...           ...           ...                ...
+536088    286742     39.945364    -75.326472                440
+536089    286753     39.918701    -75.264710                178
+536090    286659     39.949104    -75.275955                152
+536091    286660     39.960680    -75.349991                142
+536092    286661     39.950913    -75.267558                125
+
+[536093 rows x 4 columns]</code></pre>
+</div>
+</div>
+<div id="6035c75b-1c1e-4829-bb1c-9248adc0c05d" class="cell" data-tags="[]" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely.geometry <span class="im">import</span> LineString</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure the DataFrame is sorted by shape_id and shape_pt_sequence</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>shapes_df <span class="op">=</span> shapes_df.sort_values(by<span class="op">=</span>[<span class="st">'shape_id'</span>, <span class="st">'shape_pt_sequence'</span>])</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Group by shape_id and create LineString for each group</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>lines <span class="op">=</span> (</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    shapes_df.groupby(<span class="st">'shape_id'</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">apply</span>(<span class="kw">lambda</span> group: LineString(<span class="bu">zip</span>(group[<span class="st">'shape_pt_lon'</span>], group[<span class="st">'shape_pt_lat'</span>])))</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    .reset_index(name<span class="op">=</span><span class="st">'geometry'</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a GeoDataFrame from the lines</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>bus_network <span class="op">=</span> gpd.GeoDataFrame(lines, geometry<span class="op">=</span><span class="st">'geometry'</span>, crs<span class="op">=</span><span class="st">'EPSG:4326'</span>)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>bus_network.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="GTFS_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="trim-bus-network-to-philadelphia-city-boundary" class="level3">
+<h3 class="anchored" data-anchor-id="trim-bus-network-to-philadelphia-city-boundary">Trim Bus Network to Philadelphia City Boundary</h3>
+<p>Add city boundary:</p>
+<div id="a3e329e1-af4c-48ae-b0e6-9c16a27cc7ad" class="cell" data-tags="[]" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>city_boundary <span class="op">=</span> ox.geocode_to_gdf(<span class="st">"Philadelphia, Pennsylvania, USA"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>city_boundary.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="GTFS_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Trim bus network:</p>
+<div id="08fb33ec-1b7e-4269-aedb-704a9214861b" class="cell" data-tags="[]" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clip the shapes to the Philadelphia boundary</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>bus_network_philadelphia <span class="op">=</span> gpd.clip(bus_network, city_boundary)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>bus_network_philadelphia.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="GTFS_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>At this step, we ensure that our segment data is working as desired so that it can combine with our points data.</p>
+<div id="4f5ac169-3ceb-4e5b-a986-fdba6e25c06d" class="cell" data-tags="[]" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely.geometry <span class="im">import</span> Point, LineString, MultiLineString</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to convert MultiLineString to LineString</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> convert_to_linestring(geometry):</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(geometry, MultiLineString):</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Combine all components into a single LineString</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        combined_coords <span class="op">=</span> []</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> line <span class="kw">in</span> geometry.geoms:  <span class="co"># Use .geoms to iterate over the components</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>            combined_coords.extend(line.coords)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> LineString(combined_coords)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> geometry  <span class="co"># If already a LineString, return as is</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the conversion function to the GeoDataFrame</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>bus_network_philadelphia[<span class="st">'geometry'</span>] <span class="op">=</span> bus_network_philadelphia[<span class="st">'geometry'</span>].<span class="bu">apply</span>(convert_to_linestring)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="f1a7a9df-4323-4a2c-8ca5-0e55aa658517" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely.ops <span class="im">import</span> split, unary_union</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a graph from the GeoDataFrame</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> geodataframe_to_graph(gdf):</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    G <span class="op">=</span> nx.Graph()</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> line <span class="kw">in</span> gdf.geometry:</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(line, LineString):</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>            coords <span class="op">=</span> <span class="bu">list</span>(line.coords)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(coords) <span class="op">-</span> <span class="dv">1</span>):</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>                G.add_edge(Point(coords[i]), Point(coords[i <span class="op">+</span> <span class="dv">1</span>]), geometry<span class="op">=</span>LineString(coords[i:i <span class="op">+</span> <span class="dv">2</span>]))</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> G</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert GeoDataFrame to a graph</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>graph <span class="op">=</span> geodataframe_to_graph(bus_network_philadelphia)</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the network into edges divided by nodes</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>edges <span class="op">=</span> []</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> edge <span class="kw">in</span> graph.edges(data<span class="op">=</span><span class="va">True</span>):</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    line <span class="op">=</span> edge[<span class="dv">2</span>][<span class="st">'geometry'</span>]</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>    start_node <span class="op">=</span> edge[<span class="dv">0</span>]</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>    end_node <span class="op">=</span> edge[<span class="dv">1</span>]</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>    edges.append({</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>        <span class="st">'geometry'</span>: line,</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">'start'</span>: start_node,</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">'end'</span>: end_node</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a GeoDataFrame of edges</span></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>edges_gdf <span class="op">=</span> gpd.GeoDataFrame(edges, crs<span class="op">=</span>bus_network_philadelphia.crs)</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>edges_gdf <span class="op">=</span> gpd.clip(edges_gdf, city_boundary)</span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>edges_gdf.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="GTFS_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="total-daily-buses-arriving-at-each-bus-stop" class="level3">
+<h3 class="anchored" data-anchor-id="total-daily-buses-arriving-at-each-bus-stop">Total daily buses arriving at each bus stop:</h3>
+<p>By aggregating this data, we estimated the daily arrivals at each bus stop, effectively quantifying the daily traffic across the network. The distribution, as illustrated in the bar plot below, reveals that while a small number of stops experience exceptionally high traffic exceeding 2,000 buses per day (likely transit interchange hubs), the majority of bus stops accommodate approximately 183 buses daily.</p>
+<div id="226eb336-7222-4f2c-aff8-973abc6ac0eb" class="cell" data-tags="[]" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>daily_buses <span class="op">=</span> stop_times_df.groupby([<span class="st">"stop_id"</span>]).size().reset_index(name<span class="op">=</span><span class="st">"daily_arrivals"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>daily_buses_sorted <span class="op">=</span> daily_buses.sort_values(by<span class="op">=</span><span class="st">"daily_arrivals"</span>, ascending<span class="op">=</span><span class="va">False</span>).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>daily_buses_sorted.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">stop_id</th>
+<th data-quarto-table-cell-role="th">daily_arrivals</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>283</td>
+<td>3876</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>593</td>
+<td>2592</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>21204</td>
+<td>2323</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>10266</td>
+<td>2252</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>1148</td>
+<td>2219</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="1222401b-6ef5-4af7-8324-e64d7404dc09" class="cell" data-tags="[]" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the histogram with bins in intervals of 400</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>plt.hist(</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    daily_buses[<span class="st">"daily_arrivals"</span>],</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    bins<span class="op">=</span><span class="bu">range</span>(<span class="dv">0</span>, daily_buses[<span class="st">"daily_arrivals"</span>].<span class="bu">max</span>() <span class="op">+</span> <span class="dv">100</span>, <span class="dv">100</span>),  <span class="co"># Adjust bins</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    edgecolor<span class="op">=</span><span class="st">"black"</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    align<span class="op">=</span><span class="st">"left"</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Set titles and labels</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Distribution of Bus Stops by Total Daily Bus Arrivals"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Number of Daily Bus Arrivals"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Number of Bus Stops"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Set x-ticks to match the bin intervals</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>plt.xticks(<span class="bu">range</span>(<span class="dv">0</span>, daily_buses[<span class="st">"daily_arrivals"</span>].<span class="bu">max</span>() <span class="op">+</span> <span class="dv">400</span>, <span class="dv">400</span>))</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a grid for better readability</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>plt.grid(axis<span class="op">=</span><span class="st">"y"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the plot</span></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="GTFS_files/figure-html/cell-13-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="total-number-and-peak-period" class="level3">
+<h3 class="anchored" data-anchor-id="total-number-and-peak-period">Total Number and Peak Period</h3>
+<p>The data was subsequently grouped by each hour of the day to analyze the temporal distribution of bus service. The bar chart below illustrates the hourly distribution, revealing two distinct periods of heightened bus frequency: between 7 AM and 8 AM, and from 3 PM to 6 PM, with consistently elevated service levels during the midday hours. Bus frequency gradually declines after 8 PM until 5 AM. For the purpose of this analysis, the 3 PM to 6 PM window is designated as the peak period due to its sustained high frequency and significance in transit operations.</p>
+<div id="a3a3d964-a3c1-4304-a8f5-a3bf38cf127b" class="cell" data-tags="[]" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>stop_times_df[<span class="st">"hour"</span>] <span class="op">=</span> stop_times_df[<span class="st">"arrival_time"</span>].<span class="bu">str</span>.<span class="bu">slice</span>(<span class="dv">0</span>, <span class="dv">2</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Group by trip_id and hour, and count rows</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>hourly_bus_arrivals <span class="op">=</span> stop_times_df.groupby([<span class="st">"stop_id"</span>, <span class="st">"hour"</span>]).size().reset_index(name<span class="op">=</span><span class="st">"hourly_arrivals"</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>hourly_bus_arrivals_sorted <span class="op">=</span> hourly_bus_arrivals.sort_values(by<span class="op">=</span><span class="st">"hourly_arrivals"</span>, ascending<span class="op">=</span><span class="va">False</span>).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>hourly_bus_arrivals_sorted.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">stop_id</th>
+<th data-quarto-table-cell-role="th">hour</th>
+<th data-quarto-table-cell-role="th">hourly_arrivals</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>283</td>
+<td>16</td>
+<td>287</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>283</td>
+<td>17</td>
+<td>278</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>283</td>
+<td>8</td>
+<td>273</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>283</td>
+<td>15</td>
+<td>266</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>283</td>
+<td>7</td>
+<td>232</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="find-number-of-buses-per-hour-on-the-entire-system-to-determine-peak-period" class="level3">
+<h3 class="anchored" data-anchor-id="find-number-of-buses-per-hour-on-the-entire-system-to-determine-peak-period">Find number of buses per hour on the entire system to determine peak period:</h3>
+<div id="3c101ce6-240b-4419-a50b-783f36800106" class="cell" data-tags="[]" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>total_hourly_buses <span class="op">=</span> stop_times_df.groupby([<span class="st">"hour"</span>]).size().reset_index(name<span class="op">=</span><span class="st">"total_bus_arrivals"</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>total_hourly_buses <span class="op">=</span> total_hourly_buses[total_hourly_buses[<span class="st">"hour"</span>] <span class="op">&lt;=</span> <span class="dv">24</span>]</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>total_hourly_buses <span class="op">=</span> total_hourly_buses.sort_values(by<span class="op">=</span><span class="st">"total_bus_arrivals"</span>, ascending<span class="op">=</span><span class="va">False</span>).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>total_hourly_buses.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">hour</th>
+<th data-quarto-table-cell-role="th">total_bus_arrivals</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>16</td>
+<td>188679</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>15</td>
+<td>187335</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>17</td>
+<td>184023</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>7</td>
+<td>177282</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>8</td>
+<td>176510</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="find-peak-period" class="level3">
+<h3 class="anchored" data-anchor-id="find-peak-period">Find Peak Period</h3>
+<div id="d5a6cebf-eb9c-4635-8c1f-1415097b3baa" class="cell" data-tags="[]" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>plt.bar(total_hourly_buses[<span class="st">"hour"</span>], total_hourly_buses[<span class="st">"total_bus_arrivals"</span>], edgecolor<span class="op">=</span><span class="st">"black"</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Add labels and title</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Total Bus Arrivals by Hour"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Hour"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Total Daily Bus Arrivals"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>plt.xticks(total_hourly_buses[<span class="st">"hour"</span>])  <span class="co"># Ensure x-axis ticks align with hours</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>plt.grid(axis<span class="op">=</span><span class="st">"y"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the plot</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="GTFS_files/figure-html/cell-16-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="bus-frequency" class="level3">
+<h3 class="anchored" data-anchor-id="bus-frequency">Bus Frequency</h3>
+<p>In transit planning, frequency refers to the number of buses servicing a particular stop within a given time frame, typically measured as buses per hour. It is a critical metric for understanding the level of service provided by a transit network, as higher frequency generally translates to shorter wait times for passengers and improved overall service reliability. In this analysis, frequency is calculated by determining the number of bus arrivals at each stop during specified time periods (3 PM to 6 PM).</p>
+<div id="d281ae03-5c14-47bd-b339-4c46813c3e60" class="cell" data-tags="[]" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>peak_bus_arrivals <span class="op">=</span> hourly_bus_arrivals[hourly_bus_arrivals[<span class="st">"hour"</span>].isin([<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>])]</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>peak_frequency <span class="op">=</span> peak_bus_arrivals.groupby(<span class="st">"stop_id"</span>, as_index<span class="op">=</span><span class="va">False</span>)[<span class="st">"hourly_arrivals"</span>].<span class="bu">sum</span>()</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>peak_frequency <span class="op">=</span> peak_frequency.rename(columns<span class="op">=</span>{<span class="st">"hourly_arrivals"</span>: <span class="st">"bus_arrivals"</span>})</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new column 'frequency'</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>peak_frequency[<span class="st">"frequency"</span>] <span class="op">=</span> peak_frequency[<span class="st">"bus_arrivals"</span>] <span class="op">/</span> <span class="dv">3</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>peak_frequency.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">stop_id</th>
+<th data-quarto-table-cell-role="th">bus_arrivals</th>
+<th data-quarto-table-cell-role="th">frequency</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2</td>
+<td>23</td>
+<td>7.666667</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>4</td>
+<td>46</td>
+<td>15.333333</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>5</td>
+<td>37</td>
+<td>12.333333</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>7</td>
+<td>6</td>
+<td>2.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>8</td>
+<td>66</td>
+<td>22.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Note: Frequency is the number of buses per hour at a bus stop</p>
+</section>
+<section id="bus-headways" class="level3">
+<h3 class="anchored" data-anchor-id="bus-headways">Bus Headways</h3>
+<p>Additionally, headways—the time interval between consecutive buses at a stop—are directly derived from frequency. It directly impacts passenger experience, as shorter headways result in reduced waiting times and greater convenience, particularly during peak periods when demand is highest. Here, we first calculate the number of bus arrivals at a stop during peak period. After getting the per hour frequency, we calculate the headway at a bus stop by dividing 60 minutes. On an average the headway is 30 minutes.</p>
+<div id="98701ebb-a65f-4409-94ad-5790512edcb2" class="cell" data-tags="[]" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the headway and assign it to a new column</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>peak_frequency[<span class="st">"headway"</span>] <span class="op">=</span> <span class="dv">60</span> <span class="op">/</span> peak_frequency[<span class="st">"frequency"</span>]</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>peak_frequency <span class="op">=</span> peak_frequency.sort_values(by<span class="op">=</span><span class="st">"headway"</span>, ascending<span class="op">=</span><span class="va">True</span>).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the updated DataFrame</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(peak_frequency)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      stop_id  bus_arrivals  frequency     headway
+0       10266           231  77.000000    0.779221
+1         283           194  64.666667    0.927835
+2        1148           176  58.666667    1.022727
+3       31564           166  55.333333    1.084337
+4         341           111  37.000000    1.621622
+...       ...           ...        ...         ...
+9981    27732             1   0.333333  180.000000
+9982    22380             1   0.333333  180.000000
+9983    22370             1   0.333333  180.000000
+9984    22388             1   0.333333  180.000000
+9985    18183             1   0.333333  180.000000
+
+[9986 rows x 4 columns]</code></pre>
+</div>
+</div>
+<p>Note: Headway refers to number of minutes in between bus arrivals</p>
+</section>
+<section id="merge-calculated-bus-metrics-with-the-stops-dataframe-containing-stop-names-and-co-ordinates" class="level3">
+<h3 class="anchored" data-anchor-id="merge-calculated-bus-metrics-with-the-stops-dataframe-containing-stop-names-and-co-ordinates">Merge calculated bus metrics with the stops dataframe containing stop names and co-ordinates:</h3>
+<div id="ab672de8-0f71-4b19-bf94-b3b24eb1ad8e" class="cell" data-tags="[]" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>peak_metrics <span class="op">=</span> pd.merge(peak_frequency, stops_df, on<span class="op">=</span><span class="st">"stop_id"</span>, how<span class="op">=</span><span class="st">"inner"</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>peak_metrics.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">stop_id</th>
+<th data-quarto-table-cell-role="th">bus_arrivals</th>
+<th data-quarto-table-cell-role="th">frequency</th>
+<th data-quarto-table-cell-role="th">headway</th>
+<th data-quarto-table-cell-role="th">stop_name</th>
+<th data-quarto-table-cell-role="th">stop_lat</th>
+<th data-quarto-table-cell-role="th">stop_lon</th>
+<th data-quarto-table-cell-role="th">location_type</th>
+<th data-quarto-table-cell-role="th">parent_station</th>
+<th data-quarto-table-cell-role="th">zone_id</th>
+<th data-quarto-table-cell-role="th">wheelchair_boarding</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>10266</td>
+<td>231</td>
+<td>77.000000</td>
+<td>0.779221</td>
+<td>Market St &amp; 15th St</td>
+<td>39.952547</td>
+<td>-75.165475</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>283</td>
+<td>194</td>
+<td>64.666667</td>
+<td>0.927835</td>
+<td>13th St</td>
+<td>39.952532</td>
+<td>-75.162559</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>1148</td>
+<td>176</td>
+<td>58.666667</td>
+<td>1.022727</td>
+<td>69th St Transportation Center South Terminal</td>
+<td>39.962079</td>
+<td>-75.258284</td>
+<td>NaN</td>
+<td>31034.0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>31564</td>
+<td>166</td>
+<td>55.333333</td>
+<td>1.084337</td>
+<td>15th St &amp; Market St - FS</td>
+<td>39.952493</td>
+<td>-75.165393</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>341</td>
+<td>111</td>
+<td>37.000000</td>
+<td>1.621622</td>
+<td>Richmond St &amp; Westmoreland St Loop</td>
+<td>39.984253</td>
+<td>-75.099553</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="bus-ridership" class="level3">
+<h3 class="anchored" data-anchor-id="bus-ridership">Bus Ridership:</h3>
+<p>We then merge the ridership at each stop to our existing dataset containing frequency and headway.</p>
+<div id="4ffd4d5c-2c94-4e66-9c10-b120bbb9bc68" class="cell" data-tags="[]" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>ridership <span class="op">=</span> pd.read_csv(<span class="st">"Data/Fall_2023_Stop_Summary_(Bus).csv"</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>ridership[<span class="st">"Ridership"</span>] <span class="op">=</span> ridership[<span class="st">"Weekday_On"</span>] <span class="op">+</span> ridership[<span class="st">"Weekday_Of"</span>]</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>ridership.rename(columns<span class="op">=</span>{<span class="st">"Stop_Code"</span>: <span class="st">"stop_id"</span>}, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>ridership_by_stop <span class="op">=</span> ridership.groupby(<span class="st">"stop_id"</span>)[<span class="st">"Ridership"</span>].<span class="bu">sum</span>().reset_index()</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>ridership_by_stop.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="20">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">stop_id</th>
+<th data-quarto-table-cell-role="th">Ridership</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2</td>
+<td>1188</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>4</td>
+<td>666</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>5</td>
+<td>448</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>7</td>
+<td>41</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>8</td>
+<td>1280</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="dafb2ca6-fefe-47cd-8d26-e94b372db811" class="cell" data-tags="[]" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Merge Ridership and Schedules</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>peak_metrics <span class="op">=</span> pd.merge(peak_metrics, ridership_by_stop, on<span class="op">=</span><span class="st">"stop_id"</span>, how<span class="op">=</span><span class="st">"inner"</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(peak_metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      stop_id  bus_arrivals  frequency     headway  \
+0       10266           231  77.000000    0.779221   
+1        1148           176  58.666667    1.022727   
+2       31564           166  55.333333    1.084337   
+3         341           111  37.000000    1.621622   
+4         841           103  34.333333    1.747573   
+...       ...           ...        ...         ...   
+9140    27732             1   0.333333  180.000000   
+9141    22380             1   0.333333  180.000000   
+9142    22370             1   0.333333  180.000000   
+9143    22388             1   0.333333  180.000000   
+9144    18183             1   0.333333  180.000000   
+
+                                         stop_name   stop_lat   stop_lon  \
+0                              Market St &amp; 15th St  39.952547 -75.165475   
+1     69th St Transportation Center South Terminal  39.962079 -75.258284   
+2                         15th St &amp; Market St - FS  39.952493 -75.165393   
+3               Richmond St &amp; Westmoreland St Loop  39.984253 -75.099553   
+4                  Fern Rock Transportation Center  40.041940 -75.136970   
+...                                            ...        ...        ...   
+9140                State Rd &amp; Pennypack St - MBFS  40.043558 -74.998562   
+9141                Bustleton Av &amp; Scotchbrook Dr   40.082637 -75.040538   
+9142                        Welsh Rd &amp; Michael Rd   40.063238 -75.028130   
+9143                      Alburger Av &amp; Verree Rd   40.094735 -75.050601   
+9144                    Washington Ln &amp; Chew -MBNS  40.051825 -75.172181   
+
+      location_type  parent_station  zone_id  wheelchair_boarding  Ridership  
+0               NaN             NaN        1                    1       2848  
+1               NaN         31034.0        1                    1       4758  
+2               NaN             NaN        1                    1        539  
+3               NaN             NaN        1                    1        222  
+4               NaN             NaN        1                    1       1509  
+...             ...             ...      ...                  ...        ...  
+9140            NaN             NaN        1                    1          0  
+9141            NaN             NaN        1                    1          2  
+9142            NaN             NaN        1                    1         14  
+9143            NaN             NaN        1                    1         16  
+9144            NaN             NaN        1                    1         12  
+
+[9145 rows x 12 columns]</code></pre>
+</div>
+</div>
+<p>Our analysis aimed to determine whether higher frequency (or shorter headways) correlates with greater ridership. While ridership and frequency exhibit a positive correlation, the presence of many outliers highlights the need for a combined analysis of both variables. This is crucial for identifying streets that would benefit most from improvements such as bus lanes, and it suggests that increasing frequency may be necessary to better accommodate the current ridership levels.</p>
+<div id="7c3627e8-ecb7-4e06-91e6-959d66757631" class="cell" data-tags="[]" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure data is numeric and drop rows with NaN values for the columns of interest</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>peak_metrics_cleaned <span class="op">=</span> peak_metrics.dropna(subset<span class="op">=</span>[<span class="st">'frequency'</span>, <span class="st">'Ridership'</span>])</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the data</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> peak_metrics_cleaned[<span class="st">'frequency'</span>]</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> peak_metrics_cleaned[<span class="st">'Ridership'</span>]</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a linear regression model</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>coefficients <span class="op">=</span> np.polyfit(x, y, <span class="dv">1</span>)  <span class="co"># Degree 1 for linear regression</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>trendline <span class="op">=</span> np.poly1d(coefficients)</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the scatterplot</span></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>plt.scatter(x, y, alpha<span class="op">=</span><span class="fl">0.7</span>, label<span class="op">=</span><span class="st">'Data'</span>)</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the trend line</span></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>plt.plot(x, trendline(x), color<span class="op">=</span><span class="st">'red'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">'Trend Line'</span>)</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Add titles and labels</span></span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Scatterplot of Frequency vs Ridership with Trend Line'</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Frequency'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Ridership'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Add legend</span></span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Show grid</span></span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the plot</span></span>
+<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="GTFS_files/figure-html/cell-22-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This presumption is supported by the scatter-plot below, which reveals that stops with extremely high ridership are concentrated near the origin, corresponding to headways of under 25 minutes. We can also see that areas with greater headways have their ridership closer to origin well- suggesting lower ridership demand.</p>
+<div id="7d1a72ac-4c5c-4c48-b721-02f3015b10bf" class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatterplot: Ridership vs. Headway</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>plt.scatter(</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    peak_metrics[<span class="st">"headway"</span>],</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    peak_metrics[<span class="st">"Ridership"</span>],</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    c<span class="op">=</span><span class="st">"blue"</span>,</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">0.4</span>,)</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Scatterplot: Ridership vs. Headway"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Headway (minutes)"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Ridership"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>plt.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="convert-bus-data-to-geodataframe" class="level3">
+<h3 class="anchored" data-anchor-id="convert-bus-data-to-geodataframe">Convert Bus Data to GeoDataframe</h3>
+<div id="eea33796-d081-4f54-be62-b532532d8e8a" class="cell" data-tags="[]" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>geometry <span class="op">=</span> [Point(xy) <span class="cf">for</span> xy <span class="kw">in</span> <span class="bu">zip</span>(peak_metrics[<span class="st">"stop_lon"</span>], peak_metrics[<span class="st">"stop_lat"</span>])]</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>peak_metrics_geo <span class="op">=</span> gpd.GeoDataFrame(peak_metrics, geometry<span class="op">=</span>geometry)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Set a Coordinate Reference System (CRS)</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>peak_metrics_geo.set_crs(epsg<span class="op">=</span><span class="dv">4326</span>, inplace<span class="op">=</span><span class="va">True</span>)  <span class="co"># WGS84 CRS</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>peak_metrics_geo.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">stop_id</th>
+<th data-quarto-table-cell-role="th">bus_arrivals</th>
+<th data-quarto-table-cell-role="th">frequency</th>
+<th data-quarto-table-cell-role="th">headway</th>
+<th data-quarto-table-cell-role="th">stop_name</th>
+<th data-quarto-table-cell-role="th">stop_lat</th>
+<th data-quarto-table-cell-role="th">stop_lon</th>
+<th data-quarto-table-cell-role="th">location_type</th>
+<th data-quarto-table-cell-role="th">parent_station</th>
+<th data-quarto-table-cell-role="th">zone_id</th>
+<th data-quarto-table-cell-role="th">wheelchair_boarding</th>
+<th data-quarto-table-cell-role="th">Ridership</th>
+<th data-quarto-table-cell-role="th">geometry</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>10266</td>
+<td>231</td>
+<td>77.000000</td>
+<td>0.779221</td>
+<td>Market St &amp; 15th St</td>
+<td>39.952547</td>
+<td>-75.165475</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1</td>
+<td>1</td>
+<td>2848</td>
+<td>POINT (-75.16548 39.95255)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1148</td>
+<td>176</td>
+<td>58.666667</td>
+<td>1.022727</td>
+<td>69th St Transportation Center South Terminal</td>
+<td>39.962079</td>
+<td>-75.258284</td>
+<td>NaN</td>
+<td>31034.0</td>
+<td>1</td>
+<td>1</td>
+<td>4758</td>
+<td>POINT (-75.25828 39.96208)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>31564</td>
+<td>166</td>
+<td>55.333333</td>
+<td>1.084337</td>
+<td>15th St &amp; Market St - FS</td>
+<td>39.952493</td>
+<td>-75.165393</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1</td>
+<td>1</td>
+<td>539</td>
+<td>POINT (-75.16539 39.95249)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>341</td>
+<td>111</td>
+<td>37.000000</td>
+<td>1.621622</td>
+<td>Richmond St &amp; Westmoreland St Loop</td>
+<td>39.984253</td>
+<td>-75.099553</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1</td>
+<td>1</td>
+<td>222</td>
+<td>POINT (-75.09955 39.98425)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>841</td>
+<td>103</td>
+<td>34.333333</td>
+<td>1.747573</td>
+<td>Fern Rock Transportation Center</td>
+<td>40.041940</td>
+<td>-75.136970</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1</td>
+<td>1</td>
+<td>1509</td>
+<td>POINT (-75.13697 40.04194)</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="ca12d427-933f-4367-b8e5-24a84fb9bc42" class="cell" data-tags="[]" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>peak_metrics_geo.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="GTFS_files/figure-html/cell-25-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>To focus on bus stops within the city limits, we restrict the data to those located inside the city boundary:</p>
+<div id="bab2196e-2ef8-4ad9-a6ac-09d58f5d58bb" class="cell" data-tags="[]" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>peak_metrics_geo <span class="op">=</span> gpd.clip(peak_metrics_geo, city_boundary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="fba6e107-f7dd-4c35-b2e3-66201196d08b" class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>peak_metrics_geo.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="GTFS_files/figure-html/cell-27-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="level-of-service-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="level-of-service-analysis">Level of Service Analysis</h2>
+<p>To better understand the spatial distribution of bus network, we first clipped the network to city limits.</p>
+</section>
+<section id="visualise-metrics-by-bus-stop" class="level2">
+<h2 class="anchored" data-anchor-id="visualise-metrics-by-bus-stop">Visualise metrics by bus stop:</h2>
+<p>To evaluate the level of service across Philadelphia and understand user patterns, we visualized three key components—frequency, headway, and ridership—on a map for peak periods. The map reveals that most areas in the city benefit from frequent bus services, with frequency under 10 during peak times and averaging below 20 minutes headway across the day. However, there are extreme outliers in some regions, where headway exceed 180 minutes, highlighting disparities in service provision. By adding a geographic component, we observe a more nuanced distribution of ridership across Philadelphia. As expected, areas in Center City exhibit high ridership and frequent bus service. Conversely, far-flung areas such as Upper Northwest and Lower Northwest show lower ridership levels and greater headway. Interestingly, Lower Northeast stands out with the highest ridership of all districts.</p>
+<p>Interestingly, while frequency and headway vary significantly across the city, ridership appears more evenly distributed, with notable exceptions in Center City, which experiences concentrated high ridership, and the Lower Northwest, near Mt. Airy, which shows higher ridership despite longer headway.</p>
+<div id="fbe0be0d-f5bf-41bb-83a8-4da16ffb05a2" class="cell" data-tags="[]" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ipywidgets <span class="im">as</span> widgets</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co"># create function</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_map(selected_metric):</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>))</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    peak_metrics_geo.plot(</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>        ax<span class="op">=</span>ax,</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>        column<span class="op">=</span>selected_metric, </span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>        cmap<span class="op">=</span><span class="st">"plasma"</span>,            </span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>        legend<span class="op">=</span><span class="va">True</span>,              </span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>        markersize<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="ss">f"</span><span class="sc">{</span>selected_metric<span class="sc">.</span>capitalize()<span class="sc">}</span><span class="ss"> by Bus Stop"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">"Longitude"</span>)</span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">"Latitude"</span>)</span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>dropdown <span class="op">=</span> widgets.Dropdown(</span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>    options<span class="op">=</span>[<span class="st">'frequency'</span>, <span class="st">'headway'</span>, <span class="st">'Ridership'</span>],  </span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>    value<span class="op">=</span><span class="st">'frequency'</span>,</span>
+<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a>    description<span class="op">=</span><span class="st">'Metric:'</span>,)</span>
+<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a>widgets.interactive(create_map, selected_metric<span class="op">=</span>dropdown)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg ansi-bold">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg ansi-bold">NameError</span>                                 Traceback (most recent call last)
+File <span class="ansi-green-fg ansi-bold">~\miniforge3\envs\musa-550-fall-2023\lib\site-packages\ipywidgets\widgets\interaction.py:243</span>, in <span class="ansi-cyan-fg">interactive.update</span><span class="ansi-blue-fg ansi-bold">(self, *args)</span>
+<span class="ansi-green-fg">    241</span>     value <span style="color:rgb(98,98,98)">=</span> widget<span style="color:rgb(98,98,98)">.</span>get_interact_value()
+<span class="ansi-green-fg">    242</span>     <span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>kwargs[widget<span style="color:rgb(98,98,98)">.</span>_kwarg] <span style="color:rgb(98,98,98)">=</span> value
+<span class="ansi-green-fg ansi-bold">--&gt; 243</span> <span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>result <span style="color:rgb(98,98,98)">=</span> <span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>f(<span style="color:rgb(98,98,98)">*</span><span style="color:rgb(98,98,98)">*</span><span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>kwargs)
+<span class="ansi-green-fg">    244</span> show_inline_matplotlib_plots()
+<span class="ansi-green-fg">    245</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> <span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>auto_display <span style="font-weight:bold;color:rgb(175,0,255)">and</span> <span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>result <span style="font-weight:bold;color:rgb(175,0,255)">is</span> <span style="font-weight:bold;color:rgb(175,0,255)">not</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>:
+
+Cell <span class="ansi-green-fg ansi-bold">In[1], line 5</span>, in <span class="ansi-cyan-fg">create_map</span><span class="ansi-blue-fg ansi-bold">(selected_metric)</span>
+<span class="ansi-green-fg">      4</span> <span style="font-weight:bold;color:rgb(0,135,0)">def</span> <span style="color:rgb(0,0,255)">create_map</span>(selected_metric):
+<span class="ansi-green-fg ansi-bold">----&gt; 5</span>     fig, ax <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">plt</span><span style="color:rgb(98,98,98)">.</span>subplots(figsize<span style="color:rgb(98,98,98)">=</span>(<span style="color:rgb(98,98,98)">8</span>, <span style="color:rgb(98,98,98)">8</span>))
+<span class="ansi-green-fg">      6</span>     peak_metrics_geo<span style="color:rgb(98,98,98)">.</span>plot(
+<span class="ansi-green-fg">      7</span>         ax<span style="color:rgb(98,98,98)">=</span>ax,
+<span class="ansi-green-fg">      8</span>         column<span style="color:rgb(98,98,98)">=</span>selected_metric, 
+<span class="ansi-green-fg">      9</span>         cmap<span style="color:rgb(98,98,98)">=</span><span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">plasma</span><span style="color:rgb(175,0,0)">"</span>,            
+<span class="ansi-green-fg">     10</span>         legend<span style="color:rgb(98,98,98)">=</span><span style="font-weight:bold;color:rgb(0,135,0)">True</span>,              
+<span class="ansi-green-fg">     11</span>         markersize<span style="color:rgb(98,98,98)">=</span><span style="color:rgb(98,98,98)">2</span>)
+<span class="ansi-green-fg">     14</span>     plt<span style="color:rgb(98,98,98)">.</span>title(<span style="color:rgb(175,0,0)">f</span><span style="color:rgb(175,0,0)">"</span><span style="font-weight:bold;color:rgb(175,95,135)">{</span>selected_metric<span style="color:rgb(98,98,98)">.</span>capitalize()<span style="font-weight:bold;color:rgb(175,95,135)">}</span><span style="color:rgb(175,0,0)"> by Bus Stop</span><span style="color:rgb(175,0,0)">"</span>, fontsize<span style="color:rgb(98,98,98)">=</span><span style="color:rgb(98,98,98)">16</span>)
+
+<span class="ansi-red-fg ansi-bold">NameError</span>: name 'plt' is not defined</pre>
+</div>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"774a8273990e446da5bbedb0d20aa482","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+</div>
+</section>
+<section id="join-bus-stop-level-metrics-to-philadelphias-bus-network" class="level1">
+<h1>Join Bus Stop Level Metrics to Philadelphia’s Bus Network:</h1>
+<p>Spatial Join: Bus Stops to Bus Network</p>
+<p>Till now we were looking at transit data at a point, however to understand what routes generate the most traffic and what routes to prioritze, we need to look at the data at street level. To achieve this, we joined the bus stops to the bus network, ensuring that each point is associated with the nearest street segment.</p>
+<div id="38bc3211-f3ba-4148-8231-e028999a4d4d" class="cell" data-tags="[]" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure both GeoDataFrames are in a projected CRS</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>peak_metrics_geo <span class="op">=</span> peak_metrics_geo.to_crs(<span class="st">"EPSG: 2272"</span>)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>edges_gdf <span class="op">=</span> edges_gdf.to_crs(<span class="st">"EPSG: 2272"</span>)</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>peak_metrics_geo <span class="op">=</span> peak_metrics_geo.reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform a spatial join to find the nearest road segment</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>peak_metrics_network <span class="op">=</span> gpd.sjoin_nearest(</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>    edges_gdf,                     <span class="co"># GeoDataFrame with road segments</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    peak_metrics_geo,  <span class="co"># GeoDataFrame with bus stop points</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>    how<span class="op">=</span><span class="st">"left"</span>,                <span class="co"># Keep all bus stops even if no match</span></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>    distance_col<span class="op">=</span><span class="st">"distance"</span>    <span class="co"># Adds a column with the distance to the nearest road segment</span></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a><span class="co">#Re-project to a geographic CRS</span></span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>peak_metrics_network <span class="op">=</span> peak_metrics_network.to_crs(<span class="st">"EPSG: 4326"</span>)</span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>peak_metrics_network.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="30">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">geometry</th>
+<th data-quarto-table-cell-role="th">start</th>
+<th data-quarto-table-cell-role="th">end</th>
+<th data-quarto-table-cell-role="th">index_right</th>
+<th data-quarto-table-cell-role="th">stop_id</th>
+<th data-quarto-table-cell-role="th">bus_arrivals</th>
+<th data-quarto-table-cell-role="th">frequency</th>
+<th data-quarto-table-cell-role="th">headway</th>
+<th data-quarto-table-cell-role="th">stop_name</th>
+<th data-quarto-table-cell-role="th">stop_lat</th>
+<th data-quarto-table-cell-role="th">stop_lon</th>
+<th data-quarto-table-cell-role="th">location_type</th>
+<th data-quarto-table-cell-role="th">parent_station</th>
+<th data-quarto-table-cell-role="th">zone_id</th>
+<th data-quarto-table-cell-role="th">wheelchair_boarding</th>
+<th data-quarto-table-cell-role="th">Ridership</th>
+<th data-quarto-table-cell-role="th">distance</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">292</td>
+<td>LINESTRING (-75.25350 39.87616, -75.25399 39.8...</td>
+<td>POINT (-75.253495 39.876162)</td>
+<td>POINT (-75.25398839928764 39.87604214946382)</td>
+<td>0.0</td>
+<td>17103.0</td>
+<td>55.0</td>
+<td>18.333333</td>
+<td>3.272727</td>
+<td>Philadelphia Airport Terminal A</td>
+<td>39.876761</td>
+<td>-75.247175</td>
+<td>NaN</td>
+<td>30615.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>314.0</td>
+<td>1787.205503</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">291</td>
+<td>LINESTRING (-75.25327 39.87622, -75.25350 39.8...</td>
+<td>POINT (-75.25327 39.876224)</td>
+<td>POINT (-75.253495 39.876162)</td>
+<td>0.0</td>
+<td>17103.0</td>
+<td>55.0</td>
+<td>18.333333</td>
+<td>3.272727</td>
+<td>Philadelphia Airport Terminal A</td>
+<td>39.876761</td>
+<td>-75.247175</td>
+<td>NaN</td>
+<td>30615.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>314.0</td>
+<td>1721.831860</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">290</td>
+<td>LINESTRING (-75.25312 39.87627, -75.25327 39.8...</td>
+<td>POINT (-75.253117 39.87627)</td>
+<td>POINT (-75.25327 39.876224)</td>
+<td>0.0</td>
+<td>17103.0</td>
+<td>55.0</td>
+<td>18.333333</td>
+<td>3.272727</td>
+<td>Philadelphia Airport Terminal A</td>
+<td>39.876761</td>
+<td>-75.247175</td>
+<td>NaN</td>
+<td>30615.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>314.0</td>
+<td>1677.304469</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">157</td>
+<td>LINESTRING (-75.25003 39.87626, -75.25003 39.8...</td>
+<td>POINT (-75.2500277483444 39.87625617880794)</td>
+<td>POINT (-75.250026 39.876257)</td>
+<td>0.0</td>
+<td>17103.0</td>
+<td>55.0</td>
+<td>18.333333</td>
+<td>3.272727</td>
+<td>Philadelphia Airport Terminal A</td>
+<td>39.876761</td>
+<td>-75.247175</td>
+<td>NaN</td>
+<td>30615.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>314.0</td>
+<td>820.984358</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">293</td>
+<td>MULTILINESTRING ((-75.25399 39.87604, -75.2539...</td>
+<td>POINT (-75.25398839928764 39.87604214946382)</td>
+<td>POINT (-75.26120568475493 39.8764816048662)</td>
+<td>0.0</td>
+<td>17103.0</td>
+<td>55.0</td>
+<td>18.333333</td>
+<td>3.272727</td>
+<td>Philadelphia Airport Terminal A</td>
+<td>39.876761</td>
+<td>-75.247175</td>
+<td>NaN</td>
+<td>30615.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>314.0</td>
+<td>1930.164592</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<section id="visualisation-of-metrics-by-street-segments-on-philadelphias-bus-network" class="level2">
+<h2 class="anchored" data-anchor-id="visualisation-of-metrics-by-street-segments-on-philadelphias-bus-network">Visualisation of Metrics by Street Segments on Philadelphia’s Bus Network</h2>
+<p>Following the spatial join, we can now analyze bus headways during peak hours by street segments, providing a more refined view of service levels across different parts of the city. Major corridors in Philadelphia, such as Broad Street, Walnut Street, Chestnut Street, Market Street, and Roosevelt Boulevard, exhibit headways of under 20 minutes, reflecting frequent service. In contrast, streets on the city’s periphery have significantly longer headways, exceeding 120 minutes, highlighting areas with less frequent service.</p>
+<div id="413e0b6a-1ca5-44bc-978f-ac992644d32d" class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>peak_metrics_network.plot(</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    ax<span class="op">=</span>ax,</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    column<span class="op">=</span><span class="st">"headway"</span>,  <span class="co"># Color by buses_count</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">"plasma"</span>,        <span class="co"># Use a colormap (e.g., viridis, plasma, etc.)</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    legend<span class="op">=</span><span class="va">True</span>,           <span class="co"># Add a legend</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    markersize<span class="op">=</span><span class="dv">1</span>         <span class="co"># Adjust marker size</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Add titles and labels</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Headway by Street Segment"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Longitude"</span>)</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Latitude"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="31">
+<pre><code>Text(110.89550110614813, 0.5, 'Latitude')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="GTFS_files/figure-html/cell-30-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>When examining ridership by street segments, the distribution tells a different story. Ridership remains relatively consistent across most of the network, regardless of the headway. However, ridership spikes above 2,000 passengers for specific routes around Mt. Airy, Frankford, N Broad St., as well as Center City. These areas, particularly in the North, host major transportation hubs that attract a high volume of trips.</p>
+<div id="778c7ccc-7ffe-45a3-8ea4-a3034e7864aa" class="cell" data-tags="[]" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>peak_metrics_network.plot(</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    ax<span class="op">=</span>ax,</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    column<span class="op">=</span><span class="st">"Ridership"</span>,  <span class="co"># Color by buses_count</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">"plasma"</span>,        <span class="co"># Use a colormap (e.g., viridis, plasma, etc.)</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>    legend<span class="op">=</span><span class="va">True</span>,           <span class="co"># Add a legend</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>    markersize<span class="op">=</span><span class="dv">1</span>         <span class="co"># Adjust marker size</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Add titles and labels</span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Ridership by Street Segment"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Longitude"</span>)</span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Latitude"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="32">
+<pre><code>Text(110.89550110614813, 0.5, 'Latitude')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="GTFS_files/figure-html/cell-31-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="75424e26-6feb-4afb-89fa-4a4fc1311f4d" class="cell" data-tags="[]" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>peak_metrics_network <span class="op">=</span> peak_metrics_network.drop(columns<span class="op">=</span>[<span class="st">'start'</span>, <span class="st">'end'</span>], errors<span class="op">=</span><span class="st">'ignore'</span>)  <span class="co"># Replace 'start', 'end' with problematic columns</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>peak_metrics_network.to_file(<span class="st">"Data/peak_metrics_network.geojson"</span>, driver<span class="op">=</span><span class="st">"GeoJSON"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

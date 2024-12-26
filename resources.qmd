@@ -1,0 +1,20 @@
+---
+title: "Resources"
+jupyter: python3
+---
+
+This research utilizes a combination of ridership data, bus operational performance metrics, and demographic datasets to identify key areas for impactful transit solutions in Philadelphia.
+
+[**SEPTA GTFS API**](https://gtfs.org/documentation/schedule/reference/) The General Transit Feed Specification (GTFS) API provides standardized transit data, including schedules, routes, stops, and fare information for SEPTA buses, enabling detailed analysis of transit operations.
+
+[**OSM Street Network**](https://geoffboeing.com/2016/11/osmnx-python-street-networks/): OpenStreetMap (OSM) data accessed through the osmnx Python package enables the extraction of street networks in Philadelphia.
+
+[**SEPTA Ridership Data**](https://opendataphilly.org/datasets/septa-ridership-statistics/): SEPTA’s ridership statistics provide insights into the number of passengers using different bus routes, helping identify high-demand corridors.
+
+[**Heat Vulnerability Data**](https://phl.maps.arcgis.com/apps/webappviewer/index.html?id=9ef74cdc0c83455c9df031c868083efd): The Heat Vulnerability dataset highlights areas in Philadelphia most at risk during extreme heat events. It integrates social and environmental factors to pinpoint vulnerable populations.
+
+[**Census API/ACS**](https://www.census.gov/data/developers/data-sets.html): The American Community Survey (ACS) API provides demographic data at various geographic levels to help analyze population characteristics such as income, age, and vehicle ownership.
+
+[**DVRPC/AADT**:](https://catalog.dvrpc.org/dataset/traffic-count-locations) The Delaware Valley Regional Planning Commission (DVRPC) provides Annual Average Daily Traffic (AADT) data, which includes traffic count locations across the Philadelphia region.
+
+[**Philadelphia Vision Zero High Injury Network**](https://data-phl.opendata.arcgis.com/datasets/phl::high-injury-network-2020/explore?location=40.007518%2C-75.120472%2C12.00): This dataset outlines the high-injury network in Philadelphia, identifying locations with the highest frequency of traffic-related injuries and fatalities.

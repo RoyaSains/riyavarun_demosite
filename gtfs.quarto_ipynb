@@ -1,0 +1,642 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"Mapping Transit\"\n",
+        "author: \"Varun Bhakhri, Riya Saini\"\n",
+        "format:\n",
+        "  html:\n",
+        "    code-fold: true\n",
+        "jupyter: python3\n",
+        "---\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "## **Mapping Transit Network**\n"
+      ],
+      "id": "b3bdb6c1"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#Load Packages:\n",
+        "\n",
+        "import os\n",
+        "import pandas as pd\n",
+        "import matplotlib.pyplot as plt\n",
+        "import geopandas as gpd\n",
+        "import osmnx as ox\n",
+        "import shapely\n",
+        "from shapely.geometry import Point\n",
+        "import folium\n",
+        "from folium import Choropleth"
+      ],
+      "id": "25f31492",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Load and Inspect GTFS data for Philadelphia\n",
+        "\n",
+        "We utilized the General Transit Feed Specification (GTFS), a standardized data format that provides public transportation schedules and associated network information, to extract SEPTA bus stop locations and stop times at each stop. We simultaneously, also import the bus network for the region and clip it to Philadelphia Metropolitan Area city limits for our analysis.\n"
+      ],
+      "id": "c3d596df"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#Load GTFS Data:\n",
+        "\n",
+        "gtfs_folder = \"Data/google_bus_Fall 2023\"\n",
+        "\n",
+        "# Dictionary to store dataframes for each GTFS file\n",
+        "gtfs_dataframes = {}\n",
+        "\n",
+        "# Loop through all files in the folder\n",
+        "for file_name in os.listdir(gtfs_folder):\n",
+        "    # Check if the file is a .txt file\n",
+        "    if file_name.endswith(\".txt\"):\n",
+        "        file_path = os.path.join(gtfs_folder, file_name)\n",
+        "        try:\n",
+        "            # Read the .txt file into a Pandas DataFrame\n",
+        "            dataframe_name = file_name.replace(\".txt\", \"\")\n",
+        "            gtfs_dataframes[dataframe_name] = pd.read_csv(file_path)\n",
+        "            print(f\"Imported {file_name} as '{dataframe_name}' with {len(gtfs_dataframes[dataframe_name])} rows.\")\n",
+        "        except Exception as e:\n",
+        "            print(f\"Failed to load {file_name}: {e}\")\n",
+        "\n",
+        "print(f\"Loaded DataFrames: {list(gtfs_dataframes.keys())}\")"
+      ],
+      "id": "39dd1a26",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Extract relevant files as dataframes\n",
+        "\n",
+        "stops_df = gtfs_dataframes.get(\"stops\", None)\n",
+        "stop_times_df = gtfs_dataframes.get(\"stop_times\", None)\n",
+        "routes_df = gtfs_dataframes.get(\"routes\", None)\n",
+        "shapes_df = gtfs_dataframes.get(\"shapes\", None)\n",
+        "\n",
+        "# view files\n",
+        "stops_df.head()\n",
+        "print(shapes_df)"
+      ],
+      "id": "169ba833",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from shapely.geometry import LineString\n",
+        "\n",
+        "# Ensure the DataFrame is sorted by shape_id and shape_pt_sequence\n",
+        "shapes_df = shapes_df.sort_values(by=['shape_id', 'shape_pt_sequence'])\n",
+        "\n",
+        "# Group by shape_id and create LineString for each group\n",
+        "lines = (\n",
+        "    shapes_df.groupby('shape_id')\n",
+        "    .apply(lambda group: LineString(zip(group['shape_pt_lon'], group['shape_pt_lat'])))\n",
+        "    .reset_index(name='geometry'))\n",
+        "\n",
+        "# Create a GeoDataFrame from the lines\n",
+        "bus_network = gpd.GeoDataFrame(lines, geometry='geometry', crs='EPSG:4326')\n",
+        "\n",
+        "bus_network.plot()\n",
+        "\n",
+        "# Add city boundary:\n",
+        "city_boundary = ox.geocode_to_gdf(\"Philadelphia, Pennsylvania, USA\")\n",
+        "\n",
+        "# Trim Bus network\n",
+        "bus_network_philadelphia = gpd.clip(bus_network, city_boundary)\n",
+        "\n",
+        "bus_network_philadelphia.plot()"
+      ],
+      "id": "66dcb2b8",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "At this step, we ensure that our segment data is working as desired so that it can combine with our points data.\n"
+      ],
+      "id": "a82f8855"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from shapely.geometry import Point, LineString, MultiLineString\n",
+        "\n",
+        "# Function to convert MultiLineString to LineString\n",
+        "def convert_to_linestring(geometry):\n",
+        "    if isinstance(geometry, MultiLineString):\n",
+        "        # Combine all components into a single LineString\n",
+        "        combined_coords = []\n",
+        "        for line in geometry.geoms:  # Use .geoms to iterate over the components\n",
+        "            combined_coords.extend(line.coords)\n",
+        "        return LineString(combined_coords)\n",
+        "    return geometry  # If already a LineString, return as is\n",
+        "\n",
+        "# Apply the conversion function to the GeoDataFrame\n",
+        "bus_network_philadelphia['geometry'] = bus_network_philadelphia['geometry'].apply(convert_to_linestring)\n",
+        "\n",
+        "import networkx as nx\n",
+        "from shapely.ops import split, unary_union\n",
+        "\n",
+        "# Create a graph from the GeoDataFrame\n",
+        "def geodataframe_to_graph(gdf):\n",
+        "    G = nx.Graph()\n",
+        "    for line in gdf.geometry:\n",
+        "        if isinstance(line, LineString):\n",
+        "            coords = list(line.coords)\n",
+        "            for i in range(len(coords) - 1):\n",
+        "                G.add_edge(Point(coords[i]), Point(coords[i + 1]), geometry=LineString(coords[i:i + 2]))\n",
+        "    return G\n",
+        "\n",
+        "# Convert GeoDataFrame to a graph\n",
+        "graph = geodataframe_to_graph(bus_network_philadelphia)\n",
+        "\n",
+        "# Split the network into edges divided by nodes\n",
+        "edges = []\n",
+        "for edge in graph.edges(data=True):\n",
+        "    line = edge[2]['geometry']\n",
+        "    start_node = edge[0]\n",
+        "    end_node = edge[1]\n",
+        "    edges.append({\n",
+        "        'geometry': line,\n",
+        "        'start': start_node,\n",
+        "        'end': end_node\n",
+        "    })\n",
+        "\n",
+        "# Create a GeoDataFrame of edges\n",
+        "edges_gdf = gpd.GeoDataFrame(edges, crs=bus_network_philadelphia.crs)\n",
+        "\n",
+        "edges_gdf = gpd.clip(edges_gdf, city_boundary)\n",
+        "\n",
+        "edges_gdf.plot()"
+      ],
+      "id": "61eec83e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Bus Frequency at Bus Stops\n",
+        "\n",
+        "By aggregating this data, we estimated the daily arrivals at each bus stop, effectively quantifying the daily traffic across the network. The distribution, as illustrated in the bar plot below, reveals that while a small number of stops experience exceptionally high traffic exceeding 2,000 buses per day (likely transit interchange hubs), the majority of bus stops accommodate approximately 183 buses daily.\n"
+      ],
+      "id": "8cedd5f8"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "daily_buses = stop_times_df.groupby([\"stop_id\"]).size().reset_index(name=\"daily_arrivals\")\n",
+        "\n",
+        "daily_buses_sorted = daily_buses.sort_values(by=\"daily_arrivals\", ascending=False).reset_index(drop=True)\n",
+        "\n",
+        "daily_buses_sorted.head()\n",
+        "\n",
+        "plt.figure(figsize=(8, 6))\n",
+        "\n",
+        "# Create histogram \n",
+        "plt.hist(\n",
+        "    daily_buses[\"daily_arrivals\"],\n",
+        "    bins=range(0, daily_buses[\"daily_arrivals\"].max() + 100, 100),  # Adjust bins\n",
+        "    edgecolor=\"black\",\n",
+        "    align=\"left\"\n",
+        ")\n",
+        "\n",
+        "plt.title(\"Distribution of Bus Stops by Total Daily Bus Arrivals\", fontsize=16)\n",
+        "plt.xlabel(\"Number of Daily Bus Arrivals\", fontsize=12)\n",
+        "plt.ylabel(\"Number of Bus Stops\", fontsize=12)\n",
+        "\n",
+        "plt.xticks(range(0, daily_buses[\"daily_arrivals\"].max() + 400, 400))\n",
+        "plt.grid(axis=\"y\", linestyle=\"--\", alpha=0.7)\n",
+        "plt.show()"
+      ],
+      "id": "29274dad",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Total Arrivals and Peak Period\n",
+        "\n",
+        "The data was subsequently grouped by each hour of the day to analyze the temporal distribution of bus service. The bar chart below illustrates the hourly distribution, revealing two distinct periods of heightened bus frequency: between 7 AM and 8 AM, and from 3 PM to 6 PM, with consistently elevated service levels during the midday hours. Bus frequency gradually declines after 8 PM until 5 AM. For the purpose of this analysis, the 3 PM to 6 PM window is designated as the peak period due to its sustained high frequency and significance in transit operations.\n"
+      ],
+      "id": "2d3a1d90"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "stop_times_df[\"hour\"] = stop_times_df[\"arrival_time\"].str.slice(0, 2).astype(int)\n",
+        "\n",
+        "# Group by trip_id and hour, and count rows\n",
+        "hourly_bus_arrivals = stop_times_df.groupby([\"stop_id\", \"hour\"]).size().reset_index(name=\"hourly_arrivals\")\n",
+        "\n",
+        "hourly_bus_arrivals_sorted = hourly_bus_arrivals.sort_values(by=\"hourly_arrivals\", ascending=False).reset_index(drop=True)\n",
+        "\n",
+        "hourly_bus_arrivals_sorted.head()\n",
+        "\n",
+        "# Find number of buses per hour on the entire system to determine peak period:\n",
+        "\n",
+        "total_hourly_buses = stop_times_df.groupby([\"hour\"]).size().reset_index(name=\"total_bus_arrivals\")\n",
+        "\n",
+        "total_hourly_buses = total_hourly_buses[total_hourly_buses[\"hour\"] <= 24]\n",
+        "\n",
+        "total_hourly_buses = total_hourly_buses.sort_values(by=\"total_bus_arrivals\", ascending=False).reset_index(drop=True)\n",
+        "\n",
+        "total_hourly_buses.head()"
+      ],
+      "id": "e4e1f1fe",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# plot histogram of peak period\n",
+        "plt.figure(figsize=(8, 6))\n",
+        "plt.bar(total_hourly_buses[\"hour\"], total_hourly_buses[\"total_bus_arrivals\"], edgecolor=\"black\")\n",
+        "\n",
+        "plt.title(\"Total Bus Arrivals by Hour\", fontsize=16)\n",
+        "plt.xlabel(\"Hour\", fontsize=12)\n",
+        "plt.ylabel(\"Total Daily Bus Arrivals\", fontsize=12)\n",
+        "plt.xticks(total_hourly_buses[\"hour\"])  \n",
+        "plt.grid(axis=\"y\", linestyle=\"--\", alpha=0.7)\n",
+        "plt.show()"
+      ],
+      "id": "9c563235",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Frequency and Headway\n",
+        "\n",
+        "In transit planning, frequency refers to the number of buses servicing a particular stop within a given time frame, typically measured as buses per hour. It is a critical metric for understanding the level of service provided by a transit network, as higher frequency generally translates to shorter wait times for passengers and improved overall service reliability. In this analysis, frequency is calculated by determining the number of bus arrivals at each stop during specified time periods (3 PM to 6 PM).\n"
+      ],
+      "id": "4e66e0ae"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "peak_bus_arrivals = hourly_bus_arrivals[hourly_bus_arrivals[\"hour\"].isin([3, 4, 5])]\n",
+        "\n",
+        "peak_frequency = peak_bus_arrivals.groupby(\"stop_id\", as_index=False)[\"hourly_arrivals\"].sum()\n",
+        "\n",
+        "peak_frequency = peak_frequency.rename(columns={\"hourly_arrivals\": \"bus_arrivals\"})\n",
+        "\n",
+        "# Create a new column 'frequency'\n",
+        "peak_frequency[\"frequency\"] = peak_frequency[\"bus_arrivals\"] / 3\n",
+        "\n",
+        "peak_frequency.head()"
+      ],
+      "id": "52ebf624",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "Additionally, headways—the time interval between consecutive buses at a stop—are directly derived from frequency. It directly impacts passenger experience, as shorter headways result in reduced waiting times and greater convenience, particularly during peak periods when demand is highest. Here, we first calculate the number of bus arrivals at a stop during peak period. After getting the per hour frequency, we calculate the headway at a bus stop by dividing 60 minutes. On an average the headway is 30 minutes.\n"
+      ],
+      "id": "a09ec83b"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Calculate the headway and assign it to a new column\n",
+        "peak_frequency[\"headway\"] = 60 / peak_frequency[\"frequency\"]\n",
+        "\n",
+        "peak_frequency = peak_frequency.sort_values(by=\"headway\", ascending=True).reset_index(drop=True)\n",
+        "print(peak_frequency)"
+      ],
+      "id": "5096ac68",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Ridership\n",
+        "\n",
+        "We then merge the ridership at each stop to our existing dataset containing frequency and headway.\n"
+      ],
+      "id": "4a42c81b"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "peak_metrics = pd.merge(peak_frequency, stops_df, on=\"stop_id\", how=\"inner\")\n",
+        "ridership = pd.read_csv(\"Data/Fall_2023_Stop_Summary_(Bus).csv\")\n",
+        "\n",
+        "ridership[\"Ridership\"] = ridership[\"Weekday_On\"] + ridership[\"Weekday_Of\"]\n",
+        "\n",
+        "ridership.rename(columns={\"Stop_Code\": \"stop_id\"}, inplace=True)\n",
+        "\n",
+        "ridership_by_stop = ridership.groupby(\"stop_id\")[\"Ridership\"].sum().reset_index()\n",
+        "\n",
+        "ridership_by_stop.head()\n",
+        "\n",
+        "#Merge Ridership and Schedules\n",
+        "\n",
+        "peak_metrics = pd.merge(peak_metrics, ridership_by_stop, on=\"stop_id\", how=\"inner\")\n",
+        "print(peak_metrics)"
+      ],
+      "id": "b4df7bc1",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "Our analysis aimed to determine whether higher frequency (or shorter headways) correlates with greater ridership. While ridership and frequency exhibit a positive correlation, the presence of many outliers highlights the need for a combined analysis of both variables. This is crucial for identifying streets that would benefit most from improvements such as bus lanes, and it suggests that increasing frequency may be necessary to better accommodate the current ridership levels.\n"
+      ],
+      "id": "42550e79"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import numpy as np\n",
+        "\n",
+        "# keep numeric\n",
+        "peak_metrics_cleaned = peak_metrics.dropna(subset=['frequency', 'Ridership'])\n",
+        "x = peak_metrics_cleaned['frequency']\n",
+        "y = peak_metrics_cleaned['Ridership']\n",
+        "\n",
+        "# Fit a linear regression model\n",
+        "coefficients = np.polyfit(x, y, 1)  \n",
+        "trendline = np.poly1d(coefficients)\n",
+        "\n",
+        "# Create scatterplot\n",
+        "plt.figure(figsize=(8, 6))\n",
+        "plt.scatter(x, y, alpha=0.7, label='Data')\n",
+        "plt.plot(x, trendline(x), color='red', linestyle='--', label='Trend Line')\n",
+        "\n",
+        "plt.title('Scatterplot of Frequency vs Ridership with Trend Line', fontsize=16)\n",
+        "plt.xlabel('Frequency', fontsize=12)\n",
+        "plt.ylabel('Ridership', fontsize=12)\n",
+        "plt.legend()\n",
+        "plt.grid(True, linestyle='--', alpha=0.5)\n",
+        "plt.show()"
+      ],
+      "id": "c897e504",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "This presumption is supported by the scatter-plot below, which reveals that stops with extremely high ridership are concentrated near the origin, corresponding to headways of under 25 minutes. We can also see that areas with greater headways have their ridership closer to origin well- suggesting lower ridership demand.\n"
+      ],
+      "id": "38d1bad0"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Scatterplot: Ridership vs. Headway\n",
+        "plt.figure(figsize=(8, 6))\n",
+        "\n",
+        "plt.scatter(\n",
+        "    peak_metrics[\"headway\"],\n",
+        "    peak_metrics[\"Ridership\"],\n",
+        "    c=\"blue\",\n",
+        "    alpha=0.4,)\n",
+        "\n",
+        "plt.title(\"Scatterplot: Ridership vs. Headway\", fontsize=16)\n",
+        "plt.xlabel(\"Headway (minutes)\", fontsize=12)\n",
+        "plt.ylabel(\"Ridership\", fontsize=12)\n",
+        "plt.grid(alpha=0.3)\n",
+        "plt.tight_layout()\n",
+        "plt.show()"
+      ],
+      "id": "770b031b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Level of Service Analysis\n",
+        "\n",
+        "To better understand the spatial distribution of bus network, we first clipped the network to city limits.\n"
+      ],
+      "id": "68e6b299"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "geometry = [Point(xy) for xy in zip(peak_metrics[\"stop_lon\"], peak_metrics[\"stop_lat\"])]\n",
+        "peak_metrics_geo = gpd.GeoDataFrame(peak_metrics, geometry=geometry)\n",
+        "\n",
+        "# Set a Coordinate Reference System (CRS)\n",
+        "peak_metrics_geo.set_crs(epsg=4326, inplace=True)  # WGS84 CRS\n",
+        "\n",
+        "peak_metrics_geo.head()\n",
+        "\n",
+        "peak_metrics_geo = gpd.clip(peak_metrics_geo, city_boundary)"
+      ],
+      "id": "1b95e065",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "To evaluate the level of service across Philadelphia and understand user patterns, we visualized three key components—frequency, headway, and ridership—on a map for peak periods. The map reveals that most areas in the city benefit from frequent bus services, with frequency under 10 during peak times and averaging below 20 minutes headway across the day. However, there are extreme outliers in some regions, where headway exceed 180 minutes, highlighting disparities in service provision. By adding a geographic component, we observe a more nuanced distribution of ridership across Philadelphia. As expected, areas in Center City exhibit high ridership and frequent bus service. Conversely, far-flung areas such as Upper Northwest and Lower Northwest show lower ridership levels and greater headway. Interestingly, Lower Northeast stands out with the highest ridership of all districts.\n",
+        "\n",
+        "Interestingly, while frequency and headway vary significantly across the city, ridership appears more evenly distributed, with notable exceptions in Center City, which experiences concentrated high ridership, and the Lower Northwest, near Mt. Airy, which shows higher ridership despite longer headway.\n"
+      ],
+      "id": "dd047191"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import ipywidgets as widgets\n",
+        "\n",
+        "# create function\n",
+        "def create_map(selected_metric):\n",
+        "    fig, ax = plt.subplots(figsize=(8, 8))\n",
+        "    peak_metrics_geo.plot(\n",
+        "        ax=ax,\n",
+        "        column=selected_metric, \n",
+        "        cmap=\"plasma\",            \n",
+        "        legend=True,              \n",
+        "        markersize=2)\n",
+        "    \n",
+        "    \n",
+        "    plt.title(f\"{selected_metric.capitalize()} by Bus Stop\", fontsize=16)\n",
+        "    plt.xlabel(\"Longitude\")\n",
+        "    plt.ylabel(\"Latitude\")\n",
+        "    plt.show()\n",
+        "\n",
+        "dropdown = widgets.Dropdown(\n",
+        "    options=['frequency', 'headway', 'Ridership'],  \n",
+        "    value='frequency',\n",
+        "    description='Metric:',)\n",
+        "\n",
+        "widgets.interactive(create_map, selected_metric=dropdown)"
+      ],
+      "id": "cddf82d8",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Bus Routes Analysis\n",
+        "\n",
+        "#### Spatial Join: Bus Stops to Bus Network\n",
+        "\n",
+        "Till now we were looking at transit data at a point, however to understand what routes generate the most traffic and what routes to prioritze, we need to look at the data at street level. To achieve this, we joined the bus stops to the bus network, ensuring that each point is associated with the nearest street segment.\n"
+      ],
+      "id": "bb9edd06"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Check CRS\n",
+        "peak_metrics_geo = peak_metrics_geo.to_crs(\"EPSG: 2272\")\n",
+        "bus_network_philadelphia = bus_network_philadelphia.to_crs(\"EPSG: 2272\")\n",
+        "\n",
+        "peak_metrics_geo = peak_metrics_geo.reset_index(drop=True)\n",
+        "\n",
+        "# Perform a spatial join to find the nearest road segment\n",
+        "peak_metrics_network = gpd.sjoin_nearest(\n",
+        "    bus_network_philadelphia,                     \n",
+        "    peak_metrics_geo,  \n",
+        "    how=\"left\",                \n",
+        "    distance_col=\"distance\")\n",
+        "\n",
+        "#Re-project to a geographic CRS\n",
+        "peak_metrics_network = peak_metrics_network.to_crs(\"EPSG: 4326\")\n",
+        "\n",
+        "min_distance_indices = peak_metrics_network.groupby(\"stop_id\")[\"distance\"].idxmin()\n",
+        "\n",
+        "# Filter to keep only the rows with the smallest distance\n",
+        "peak_metrics_network = peak_metrics_network.loc[min_distance_indices]\n",
+        "peak_metrics_network.head()"
+      ],
+      "id": "7bea4952",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Buses at Peak Hour\n",
+        "\n",
+        "Following the spatial join, we can now analyze bus headways during peak hours by street segments, providing a more refined view of service levels across different parts of the city. Major corridors in Philadelphia, such as Broad Street, Walnut Street, Chestnut Street, Market Street, and Roosevelt Boulevard, exhibit headways of under 20 minutes, reflecting frequent service. In contrast, streets on the city's periphery have significantly longer headways, exceeding 120 minutes, highlighting areas with less frequent service.\n"
+      ],
+      "id": "407ad50b"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# headway by street segment\n",
+        "fig, ax = plt.subplots(figsize=(8, 8))\n",
+        "peak_metrics_network.plot(\n",
+        "    ax=ax,\n",
+        "    column=\"headway\",  # Color by buses_count\n",
+        "    cmap=\"plasma\",        # Use a colormap (e.g., viridis, plasma, etc.)\n",
+        "    legend=True,           # Add a legend\n",
+        "    markersize=1         # Adjust marker size\n",
+        ")\n",
+        "\n",
+        "# Add titles and labels\n",
+        "plt.title(\"Headway by Street Segment\", fontsize=16)\n",
+        "plt.xlabel(\"Longitude\")\n",
+        "plt.ylabel(\"Latitude\")"
+      ],
+      "id": "8271d62d",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "When examining ridership by street segments, the distribution tells a different story. Ridership remains relatively consistent across most of the network, regardless of the headway. However, ridership spikes above 2,000 passengers for specific routes around Mt. Airy, Frankford, N Broad St., as well as Center City. These areas, particularly in the North, host major transportation hubs that attract a high volume of trips.\n"
+      ],
+      "id": "6b37462e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Ridership by street segment\n",
+        "fig, ax = plt.subplots(figsize=(8, 8))\n",
+        "peak_metrics_network.plot(\n",
+        "    ax=ax,\n",
+        "    column=\"Ridership\",  # Color by buses_count\n",
+        "    cmap=\"plasma\",        # Use a colormap (e.g., viridis, plasma, etc.)\n",
+        "    legend=True,           # Add a legend\n",
+        "    markersize=1         # Adjust marker size\n",
+        ")\n",
+        "\n",
+        "# Add titles and labels\n",
+        "plt.title(\"Ridership by Street Segment\", fontsize=16)\n",
+        "plt.xlabel(\"Longitude\")\n",
+        "plt.ylabel(\"Latitude\")"
+      ],
+      "id": "e769107e",
+      "execution_count": null,
+      "outputs": []
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "C:\\Users\\USER\\miniforge3\\envs\\musa-550-fall-2023\\share\\jupyter\\kernels\\python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}
